@@ -13,7 +13,7 @@ type AuthProviderType = {
 const AuthContext = createContext({} as AuthContextData);
 
 export function AuthProvider({ children }: AuthProviderType) {
-  const isAuthenticated = false;
+  const isAuthenticated = true;
 
   return (
     <AuthContext.Provider value={{ isAuthenticated }}>
