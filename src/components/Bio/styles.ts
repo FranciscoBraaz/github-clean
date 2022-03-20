@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
 
 export const Contianer = styled.View`
-  flex: 1;
+  margin-top: 40px;
 `;

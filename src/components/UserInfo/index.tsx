@@ -1,11 +1,9 @@
 import React from 'react';
 import { View } from 'react-native';
-import { Highligth } from '../Highlight/styles';
 import { SectionTitle } from '../SectionTitle';
 import {
   Container,
   ProfileInfo,
-  ProfilePhoto,
   TextName,
   UserEmail,
   UserLocation,
@@ -22,7 +20,6 @@ interface UserInfoProps {
 export function UserInfo({ avatar, name, email, location }: UserInfoProps) {
   return (
     <Container>
-      <ProfilePhoto source={{ uri: avatar }} />
       <ProfileInfo>
         <SectionTitle title={name} />
         <View style={{ marginLeft: 20 }}>

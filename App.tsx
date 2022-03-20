@@ -7,8 +7,8 @@ export default function App() {
   return (
     <SafeAreaView style={{ flex: 1, marginTop: StatusBar.currentHeight }}>
       <StatusBar
-        barStyle="dark-content"
-        backgroundColor="transparent"
+        barStyle="light-content"
+        // backgroundColor="transparent"
         translucent
       />
       <NavigationContainer>
