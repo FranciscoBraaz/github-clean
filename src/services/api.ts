@@ -7,4 +7,4 @@ export const api = axios.create({
   baseURL: BASE_URL,
 });
 
-axios.defaults.headers.common['Authorization'] = GITHUB_TOKEN;
+api.defaults.headers.common['Authorization'] = `token ${GITHUB_TOKEN}`;
