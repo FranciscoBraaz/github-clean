@@ -7,6 +7,7 @@ type UserData = {
   avatar_url: string;
   bio: string;
   email: string;
+  location: string;
   followers: number;
   following: number;
   login: string;
@@ -33,8 +34,8 @@ export function AuthProvider({ children }: AuthProviderType) {
 
   useEffect(() => {
     async function loadUserInfo() {
-      const storageUser = await AsyncStorage.getItem('@githubClean:user');
       try {
+        const storageUser = await AsyncStorage.getItem('@githubClean:user');
         if (storageUser) {
           const parsedUser = JSON.parse(storageUser);
           setUser(parsedUser);

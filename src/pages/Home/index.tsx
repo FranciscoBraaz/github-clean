@@ -1,8 +1,9 @@
 import React from 'react';
-import { Text, View } from 'react-native';
-import { Bio } from '../../components/Bio';
+import { View } from 'react-native';
+import { UserInfo } from '../../components/UserInfo';
 import { HeaderProfile } from '../../components/HeaderProfile';
 import { useAuth } from '../../contexts/AuthContext';
+import { Bio } from '../../components/Bio';
 
 export function Home() {
   const { user } = useAuth();
@@ -11,7 +12,13 @@ export function Home() {
   return (
     <View style={{ backgroundColor: '#292929', flex: 1 }}>
       <HeaderProfile username={user.login} />
-      <Bio avatar={user.avatar_url} />
+      <UserInfo
+        avatar={user.avatar_url}
+        name={user.name}
+        email={user.email}
+        location={user.location}
+      />
+      <Bio bio={user.bio} />
     </View>
   );
 }

@@ -1,15 +1,19 @@
 import React from 'react';
-import { Container, ProfileInfo, ProfilePhoto } from './styles';
+import { Text, View } from 'react-native';
+import { SectionTitle } from '../SectionTitle';
+import { Contianer } from './styles';
 
 interface BioProps {
-  avatar: string;
+  bio: string;
 }
 
-export function Bio({ avatar }: BioProps) {
+export function Bio({ bio }: BioProps) {
   return (
-    <Container>
-      <ProfilePhoto source={{ uri: avatar }} />
-      <ProfileInfo></ProfileInfo>
-    </Container>
+    <Contianer>
+      <SectionTitle title="Bio" />
+      <View style={{ marginLeft: 20 }}>
+        <Text style={{ fontSize: 16, color: '#fff' }}>{bio}</Text>
+      </View>
+    </Contianer>
   );
 }
