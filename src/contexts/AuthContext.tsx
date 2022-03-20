@@ -18,6 +18,7 @@ interface AuthContextData {
   isAuthenticated: boolean;
   user: UserData | null;
   login: (username: string) => void;
+  logout: () => void;
 }
 
 type AuthProviderType = {
@@ -52,12 +53,12 @@ export function AuthProvider({ children }: AuthProviderType) {
       .get(`/users/${username}`)
       .then(async (response) => {
         try {
-          setIsAuthenticated(true);
           await AsyncStorage.setItem(
             '@githubClean:user',
             JSON.stringify(response.data),
           );
           setUser(response.data);
+          setIsAuthenticated(true);
         } catch (err) {
           Alert.alert(
             'Erro de autenticação',
@@ -88,7 +89,7 @@ export function AuthProvider({ children }: AuthProviderType) {
   }
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login }}>
+    <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
