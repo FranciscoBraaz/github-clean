@@ -32,4 +32,5 @@ export const ButtonSubmit = styled.Pressable`
   justify-content: center;
   border-radius: 12px;
   margin-top: 20px;
+  flex-direction: row;
 `;
