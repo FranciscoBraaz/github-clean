@@ -2,7 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import { Container, Item, Number, Subtitle } from './styles';
 
-interface RenderItemProps {
+interface NumberItemProps {
   amount: number;
   subtitle: string;
 }
@@ -13,14 +13,16 @@ interface NumbersInfo {
   public_repos: number;
 }
 
-function RenderItem({ amount, subtitle }: RenderItemProps) {
+function NumberItem({ amount, subtitle }: NumberItemProps) {
   return (
-    <Item key={subtitle}>
+    <Item>
       <Number>{amount}</Number>
       <Subtitle>{subtitle}</Subtitle>
     </Item>
   );
 }
+
+const itemsKey = ['Seguidores', 'Seguindo', 'Repos'];
 
 export function NumbersInfo({
   followers,
@@ -44,8 +46,12 @@ export function NumbersInfo({
 
   return (
     <Container>
-      {items.map((item) => (
-        <RenderItem amount={item.amount} subtitle={item.subtitle} />
+      {items.map((item, index) => (
+        <NumberItem
+          amount={item.amount}
+          subtitle={item.subtitle}
+          key={itemsKey[index]}
+        />
       ))}
     </Container>
   );
