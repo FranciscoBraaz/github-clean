@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useState } from 'react';
 import { FlatList, ScrollView, Text, View } from 'react-native';
 import { SectionTitle } from '../../components/SectionTitle';
 import { api } from '../../services/api';
@@ -12,6 +12,8 @@ import {
 } from './styles';
 import { FontAwesome } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { useAuth } from '../../contexts/AuthContext';
 
 interface RepositoryData {
   name: string;
@@ -47,6 +49,8 @@ function renderRepository({ item }: RenderRepositoryProps) {
 
 export function Repositories() {
   const [repositories, setRepositories] = useState([]);
+  const navigation = useNavigation();
+  const { user } = useAuth();
 
   useEffect(() => {
     async function getRepositories() {
@@ -65,9 +69,25 @@ export function Repositories() {
     getRepositories();
   }, []);
 
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerTintColor: '#fff',
+      headerStyle: {
+        backgroundColor: '#1f1f1f',
+      },
+      headerTitleAlign: 'center',
+      title: 'Repos',
+      headerTitle: `${user?.public_repos} Repositórios` || 'Repositórios',
+    });
+  }, []);
+
   return (
     <Container>
-      <FlatList data={repositories} renderItem={renderRepository} />
+      <FlatList
+        style={{ marginBottom: 20 }}
+        data={repositories}
+        renderItem={renderRepository}
+      />
     </Container>
   );
 }

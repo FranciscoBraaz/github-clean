@@ -69,7 +69,6 @@ export default function MainRoutes() {
   return (
     <Tab.Navigator
       screenOptions={{
-        headerShown: false,
         tabBarStyle: {
           borderTopWidth: 1,
           position: 'absolute',
@@ -87,6 +86,7 @@ export default function MainRoutes() {
           name={tab.name}
           component={tab.componentRender}
           options={{
+            headerShown: index !== 0,
             tabBarActiveTintColor: '#000',
             tabBarInactiveTintColor: '#969696',
             title: `${tab.title}`,

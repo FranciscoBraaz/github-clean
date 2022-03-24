@@ -3,6 +3,7 @@ import styled from 'styled-components/native';
 export const Container = styled.View`
   flex: 1;
   background-color: #292929;
+  padding-top: 15px;
 `;
 
 export const RepositoryContainer = styled.View``;
