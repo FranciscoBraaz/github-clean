@@ -3,10 +3,11 @@ import styled from 'styled-components/native';
 export const Container = styled.View`
   flex: 1;
   background-color: #292929;
-  padding-top: 15px;
 `;
 
-export const RepositoryContainer = styled.View``;
+export const RepositoryContainer = styled.View`
+  margin-top: 25px;
+`;
 
 export const Description = styled.Text`
   font-size: 16px;

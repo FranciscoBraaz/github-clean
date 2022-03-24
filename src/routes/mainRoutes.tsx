@@ -70,7 +70,7 @@ export default function MainRoutes() {
     <Tab.Navigator
       screenOptions={{
         tabBarStyle: {
-          borderTopWidth: 1,
+          borderTopWidth: 0,
           position: 'absolute',
           bottom: 0,
           left: 0,

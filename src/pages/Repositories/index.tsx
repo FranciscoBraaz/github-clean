@@ -14,6 +14,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../../contexts/AuthContext';
+import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 
 interface RepositoryData {
   name: string;
@@ -51,6 +52,7 @@ export function Repositories() {
   const [repositories, setRepositories] = useState([]);
   const navigation = useNavigation();
   const { user } = useAuth();
+  const tabBarHeight = useBottomTabBarHeight();
 
   useEffect(() => {
     async function getRepositories() {
@@ -84,7 +86,7 @@ export function Repositories() {
   return (
     <Container>
       <FlatList
-        style={{ marginBottom: 20 }}
+        contentContainerStyle={{ paddingBottom: tabBarHeight }}
         data={repositories}
         renderItem={renderRepository}
       />

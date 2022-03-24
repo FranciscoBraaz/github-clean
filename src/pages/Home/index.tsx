@@ -44,8 +44,6 @@ export function Home() {
             public_repos={user.public_repos}
           />
           <Bio bio={user.bio} />
-          <Bio bio={user.bio} />
-          <Bio bio={user.bio} />
         </View>
       </ScrollView>
     </View>
