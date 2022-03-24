@@ -5,14 +5,15 @@ import { Container, Title } from './styles';
 
 interface SectionTitleProps {
   title: string;
+  fontSize?: number;
 }
 
-export function SectionTitle({ title }: SectionTitleProps) {
+export function SectionTitle({ title, fontSize = 36 }: SectionTitleProps) {
   return (
     <Container>
       <Highligth />
       <View>
-        <Title>{title}</Title>
+        <Title style={{ fontSize }}>{title}</Title>
       </View>
     </Container>
   );

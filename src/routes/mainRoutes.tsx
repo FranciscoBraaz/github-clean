@@ -2,6 +2,7 @@ import React, { ComponentType } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Home } from '../pages/Home';
 import { Ionicons, Feather } from '@expo/vector-icons';
+import { Repositories } from '../pages/Repositories';
 
 interface TabData {
   iconName: string;
@@ -25,7 +26,7 @@ const tabs = [
     name: 'RepositoriesTab',
     title: 'Repos',
     iconName: 'home-outline',
-    componentRender: Home,
+    componentRender: Repositories,
   },
   {
     name: 'FollowersTab',
