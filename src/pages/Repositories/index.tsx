@@ -40,6 +40,8 @@ interface RenderRepositoryProps {
   isLastItem: boolean;
 }
 
+const widthScreen = Dimensions.get('window').width;
+
 function RenderRepository({ item, isLastItem }: RenderRepositoryProps) {
   const AnimatedEntrance = useRef(new Animated.Value(0)).current;
 
@@ -105,13 +107,13 @@ function RepositorySkeleton() {
         widthComponent="80%"
         widthSkeleton="30%"
         heightComponent="40px"
-        outputRangeFinal={300}
+        outputRangeFinal={widthScreen}
       />
       <Skeleton
         widthComponent="100%"
         widthSkeleton="30%"
         heightComponent="20px"
-        outputRangeFinal={350}
+        outputRangeFinal={widthScreen}
         style={{ marginTop: 20 }}
       />
       <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -119,14 +121,14 @@ function RepositorySkeleton() {
           widthComponent="60px"
           widthSkeleton="30%"
           heightComponent="20px"
-          outputRangeFinal={80}
+          outputRangeFinal={widthScreen / 3}
           style={{ marginTop: 20 }}
         />
         <Skeleton
           widthComponent="60px"
           widthSkeleton="30%"
           heightComponent="20px"
-          outputRangeFinal={80}
+          outputRangeFinal={widthScreen / 3}
           style={{ marginTop: 20 }}
         />
       </View>
@@ -155,9 +157,7 @@ export function Repositories() {
     if (!loadMore) return;
     setIsLoading(true);
     await api
-      .get(
-        `https://api.github.com/users/FranciscoBraaz/repos?page=${page}&per_page=${perPage}`,
-      )
+      .get(`/users/FranciscoBraaz/repos?page=${page}&per_page=${perPage}`)
       .then((response) => {
         setTimeout(() => {
           setRepositories([...repositories, ...response.data]);
