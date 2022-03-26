@@ -31,6 +31,8 @@ interface RenderUserProps {
 
 const widthScreen = Dimensions.get('window').width;
 
+const skeletons = [1, 2, 3, 4, 5];
+
 function RenderUser({ item, isLastItem }: RenderUserProps) {
   const AnimatedEntrance = useRef(new Animated.Value(0)).current;
 
@@ -77,28 +79,37 @@ function RenderUser({ item, isLastItem }: RenderUserProps) {
 
 function UserSkeleton() {
   return (
-    <View style={{ paddingLeft: 20, paddingRight: 20, marginTop: 25 }}>
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-        }}
-      >
-        <Skeleton
-          widthComponent="64px"
-          widthSkeleton="30%"
-          heightComponent="64px"
-          outputRangeFinal={widthScreen / 3}
-          style={{ marginTop: 20, borderRadius: 32 }}
-        />
-        <Skeleton
-          widthComponent="70%"
-          widthSkeleton="30%"
-          heightComponent="40px"
-          outputRangeFinal={widthScreen}
-          style={{ marginTop: 20, marginLeft: 20, borderRadius: 12 }}
-        />
-      </View>
+    <View>
+      {skeletons.map((item, index) => (
+        <View key={item}>
+          <View
+            style={{
+              flexDirection: 'row',
+              alignItems: 'center',
+              paddingTop: 20,
+              paddingBottom: 20,
+              paddingLeft: 20,
+              paddingRight: 20,
+            }}
+          >
+            <Skeleton
+              widthComponent="64px"
+              widthSkeleton="30%"
+              heightComponent="64px"
+              outputRangeFinal={widthScreen / 3}
+              style={{ borderRadius: 32 }}
+            />
+            <Skeleton
+              widthComponent="70%"
+              widthSkeleton="30%"
+              heightComponent="40px"
+              outputRangeFinal={widthScreen}
+              style={{ marginLeft: 20, borderRadius: 12 }}
+            />
+          </View>
+          {index !== skeletons.length - 1 && <Divider />}
+        </View>
+      ))}
     </View>
   );
 }
@@ -169,15 +180,7 @@ export function Following() {
   return (
     <Container>
       {isLoadingInitial ? (
-        <View>
-          <UserSkeleton />
-          <Divider />
-          <UserSkeleton />
-          <Divider />
-          <UserSkeleton />
-          <Divider />
-          <UserSkeleton />
-        </View>
+        <UserSkeleton />
       ) : (
         <FlatList
           showsVerticalScrollIndicator={false}
