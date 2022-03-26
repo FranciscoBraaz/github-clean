@@ -16,6 +16,7 @@ export function Skeleton({
   outputRangeFinal,
   ...rest
 }: SkeletonProps) {
+  //@ts-ignore
   const AnimatedValue = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -34,10 +35,11 @@ export function Skeleton({
     }).start(() => {
       setTimeout(() => {
         linearAnimation();
-      }, 800);
+      }, 1000);
     });
   };
 
+  //@ts-ignore
   const translateX = AnimatedValue.interpolate({
     inputRange: [0, 1],
     outputRange: [-10, outputRangeFinal],

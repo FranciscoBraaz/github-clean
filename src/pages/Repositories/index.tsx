@@ -41,24 +41,48 @@ interface RenderRepositoryProps {
 }
 
 function RenderRepository({ item, isLastItem }: RenderRepositoryProps) {
+  const AnimatedEntrance = useRef(new Animated.Value(0)).current;
+
+  useEffect(() => {
+    animationEntry();
+
+    return () => animationEntry();
+  }, []);
+
+  const animationEntry = () => {
+    Animated.timing(AnimatedEntrance, {
+      toValue: 1,
+      duration: 350,
+      useNativeDriver: true,
+      easing: Easing.linear,
+    }).start();
+  };
+
+  const translateX = AnimatedEntrance.interpolate({
+    inputRange: [0, 1],
+    outputRange: [-10, 0],
+  });
+
   return (
     <View>
-      <RepositoryContainer>
-        <SectionTitle title={item.name} fontSize={26} />
-        <Description>{item.description}</Description>
-        <ExtraInfo>
-          <Stars>
-            <FontAwesome name="star-o" size={18} color="#ffce00" />
-            <Text style={{ fontSize: 18, marginLeft: 10, color: '#fff' }}>
-              {item.stargazers_count}
-            </Text>
-          </Stars>
-          <Visibility>
-            <MaterialIcons name="lock-open" size={18} color="#63bf1f" />
-            <MaterialIcons name="lock-outline" size={18} color="#2c3e50" />
-          </Visibility>
-        </ExtraInfo>
-      </RepositoryContainer>
+      <Animated.View style={{ transform: [{ translateX: translateX }] }}>
+        <RepositoryContainer>
+          <SectionTitle title={item.name} fontSize={26} />
+          <Description>{item.description}</Description>
+          <ExtraInfo>
+            <Stars>
+              <FontAwesome name="star-o" size={18} color="#ffce00" />
+              <Text style={{ fontSize: 18, marginLeft: 10, color: '#fff' }}>
+                {item.stargazers_count}
+              </Text>
+            </Stars>
+            <Visibility>
+              <MaterialIcons name="lock-open" size={18} color="#63bf1f" />
+              <MaterialIcons name="lock-outline" size={18} color="#2c3e50" />
+            </Visibility>
+          </ExtraInfo>
+        </RepositoryContainer>
+      </Animated.View>
 
       {!isLastItem && <Divider />}
     </View>
@@ -68,7 +92,7 @@ function RenderRepository({ item, isLastItem }: RenderRepositoryProps) {
 function LoadingIndicator({ load }: { load: boolean }) {
   if (!load) return null;
   return (
-    <View>
+    <View style={{ marginBottom: 10 }}>
       <BarIndicator color="#ffce00" size={28} />
     </View>
   );
@@ -123,6 +147,7 @@ export function Repositories() {
 
   useEffect(() => {
     setIsLoadingInitial(true);
+    setLoadMore(true);
     fetchRepositories();
   }, []);
 
@@ -177,9 +202,9 @@ export function Repositories() {
         </View>
       ) : (
         <FlatList
-          style={{ paddingBottom: 40 }}
+          // style={{ marginBottom: 40 }}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{ paddingBottom: tabBarHeight + 10 }}
+          contentContainerStyle={{ paddingBottom: tabBarHeight }}
           data={repositories}
           renderItem={({ item, index }) => (
             <RenderRepository
