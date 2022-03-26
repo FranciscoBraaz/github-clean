@@ -4,6 +4,7 @@ import { Home } from '../pages/Home';
 import { Ionicons, Feather } from '@expo/vector-icons';
 import { Repositories } from '../pages/Repositories';
 import { Following } from '../pages/Following';
+import { Followers } from '../pages/Followers';
 
 interface TabData {
   iconName: string;
@@ -33,7 +34,7 @@ const tabs = [
     name: 'FollowersTab',
     title: 'Seguidores',
     iconName: 'people-outline',
-    componentRender: Home,
+    componentRender: Followers,
   },
   {
     name: 'FollowingTab',
