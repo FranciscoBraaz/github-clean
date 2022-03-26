@@ -100,39 +100,62 @@ function LoadingIndicator({ load }: { load: boolean }) {
   );
 }
 
+const skeletons = [1, 2, 3, 4];
+
 function RepositorySkeleton() {
+  const tabBarHeight = useBottomTabBarHeight();
+
   return (
-    <View style={{ paddingLeft: 20, paddingRight: 20, marginTop: 25 }}>
-      <Skeleton
-        widthComponent="80%"
-        widthSkeleton="30%"
-        heightComponent="40px"
-        outputRangeFinal={widthScreen}
-      />
-      <Skeleton
-        widthComponent="100%"
-        widthSkeleton="30%"
-        heightComponent="20px"
-        outputRangeFinal={widthScreen}
-        style={{ marginTop: 20 }}
-      />
-      <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-        <Skeleton
-          widthComponent="60px"
-          widthSkeleton="30%"
-          heightComponent="20px"
-          outputRangeFinal={widthScreen / 3}
-          style={{ marginTop: 20 }}
-        />
-        <Skeleton
-          widthComponent="60px"
-          widthSkeleton="30%"
-          heightComponent="20px"
-          outputRangeFinal={widthScreen / 3}
-          style={{ marginTop: 20 }}
-        />
-      </View>
-    </View>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={{ paddingBottom: tabBarHeight }}
+    >
+      {skeletons.map((item, index) => (
+        <View key={item}>
+          <View
+            style={{
+              paddingLeft: 20,
+              paddingRight: 20,
+              paddingTop: 25,
+              paddingBottom: 25,
+            }}
+          >
+            <Skeleton
+              widthComponent="80%"
+              widthSkeleton="30%"
+              heightComponent="40px"
+              outputRangeFinal={widthScreen}
+            />
+            <Skeleton
+              widthComponent="100%"
+              widthSkeleton="30%"
+              heightComponent="20px"
+              outputRangeFinal={widthScreen}
+              style={{ marginTop: 20 }}
+            />
+            <View
+              style={{ flexDirection: 'row', justifyContent: 'space-between' }}
+            >
+              <Skeleton
+                widthComponent="60px"
+                widthSkeleton="30%"
+                heightComponent="20px"
+                outputRangeFinal={widthScreen / 3}
+                style={{ marginTop: 20 }}
+              />
+              <Skeleton
+                widthComponent="60px"
+                widthSkeleton="30%"
+                heightComponent="20px"
+                outputRangeFinal={widthScreen / 3}
+                style={{ marginTop: 20 }}
+              />
+            </View>
+          </View>
+          {index !== skeletons.length - 1 && <Divider />}
+        </View>
+      ))}
+    </ScrollView>
   );
 }
 
@@ -193,16 +216,9 @@ export function Repositories() {
   return (
     <Container>
       {isLoadingInitial ? (
-        <View>
-          <RepositorySkeleton />
-          <Divider />
-          <RepositorySkeleton />
-          <Divider />
-          <RepositorySkeleton />
-        </View>
+        <RepositorySkeleton />
       ) : (
         <FlatList
-          // style={{ marginBottom: 40 }}
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{ paddingBottom: tabBarHeight }}
           data={repositories}

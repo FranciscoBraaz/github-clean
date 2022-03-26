@@ -5,6 +5,7 @@ import {
   Dimensions,
   Animated,
   Easing,
+  ScrollView,
 } from 'react-native';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
@@ -31,7 +32,7 @@ interface RenderUserProps {
 
 const widthScreen = Dimensions.get('window').width;
 
-const skeletons = [1, 2, 3, 4, 5];
+const skeletons = [1, 2, 3, 4, 5, 6];
 
 function RenderUser({ item, isLastItem }: RenderUserProps) {
   const AnimatedEntrance = useRef(new Animated.Value(0)).current;
@@ -78,8 +79,13 @@ function RenderUser({ item, isLastItem }: RenderUserProps) {
 }
 
 function UserSkeleton() {
+  const tabBarHeight = useBottomTabBarHeight();
+
   return (
-    <View>
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+      contentContainerStyle={{ paddingBottom: tabBarHeight }}
+    >
       {skeletons.map((item, index) => (
         <View key={item}>
           <View
@@ -110,7 +116,7 @@ function UserSkeleton() {
           {index !== skeletons.length - 1 && <Divider />}
         </View>
       ))}
-    </View>
+    </ScrollView>
   );
 }
 
