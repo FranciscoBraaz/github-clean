@@ -15,8 +15,20 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 import { useAuth } from '../../contexts/AuthContext';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import {
+  BallIndicator,
+  BarIndicator,
+  DotIndicator,
+  MaterialIndicator,
+  PacmanIndicator,
+  PulseIndicator,
+  SkypeIndicator,
+  UIActivityIndicator,
+  WaveIndicator,
+} from 'react-native-indicators';
 
 interface RepositoryData {
+  id: number;
   name: string;
   description: string;
   visibility: string;
@@ -48,28 +60,54 @@ function renderRepository({ item }: RenderRepositoryProps) {
   );
 }
 
+function LoadingIndicator({ load }: { load: boolean }) {
+  if (!load) return null;
+  return (
+    <View>
+      <BarIndicator color="#ffce00" size={28} />
+    </View>
+  );
+}
+
 export function Repositories() {
-  const [repositories, setRepositories] = useState([]);
+  const [repositories, setRepositories] = useState([] as RepositoryData[]);
   const navigation = useNavigation();
   const { user } = useAuth();
   const tabBarHeight = useBottomTabBarHeight();
+  const [isLoading, setIsLoading] = useState(false);
+  const [page, setPage] = useState(1);
+  const [loadMore, setLoadMore] = useState(true);
+  const perPage = 8;
 
   useEffect(() => {
-    async function getRepositories() {
-      await api
-        .get(
-          'https://api.github.com/users/FranciscoBraaz/repos?page=3&per_page=5',
-        )
-        .then((response) => {
-          setRepositories(response.data);
-        })
-        .catch((err) => {
-          console.log(err.response);
-        });
-    }
-
-    getRepositories();
+    fetchRepositories();
   }, []);
+
+  async function fetchRepositories() {
+    if (!loadMore) return;
+    setIsLoading(true);
+    await api
+      .get(
+        `https://api.github.com/users/FranciscoBraaz/repos?page=${page}&per_page=${perPage}`,
+      )
+      .then((response) => {
+        setTimeout(() => {
+          setRepositories([...repositories, ...response.data]);
+          setPage(page + 1);
+          if (response.data.length < 8) {
+            setLoadMore(false);
+          }
+        }, 500);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      })
+      .finally(() => {
+        setTimeout(() => {
+          setIsLoading(false);
+        }, 500);
+      });
+  }
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -86,9 +124,14 @@ export function Repositories() {
   return (
     <Container>
       <FlatList
-        contentContainerStyle={{ paddingBottom: tabBarHeight }}
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: tabBarHeight + 10 }}
         data={repositories}
         renderItem={renderRepository}
+        keyExtractor={(item) => String(item.id)}
+        onEndReached={fetchRepositories}
+        onEndReachedThreshold={0.1}
+        ListFooterComponent={<LoadingIndicator load={isLoading} />}
       />
     </Container>
   );

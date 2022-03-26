@@ -1,9 +1,11 @@
-import { SafeAreaView, StyleSheet, StatusBar } from 'react-native';
+import { SafeAreaView, StyleSheet, StatusBar, LogBox } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { AuthProvider } from './src/contexts/AuthContext';
 import Routes from './src/routes';
 
 export default function App() {
+  LogBox.ignoreLogs(['Remote debugger']);
+
   return (
     <SafeAreaView style={{ flex: 1, marginTop: StatusBar.currentHeight }}>
       <StatusBar
