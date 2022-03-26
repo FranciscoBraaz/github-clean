@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Home } from '../pages/Home';
 import { Ionicons, Feather } from '@expo/vector-icons';
 import { Repositories } from '../pages/Repositories';
+import { Following } from '../pages/Following';
 
 interface TabData {
   iconName: string;
@@ -38,7 +39,7 @@ const tabs = [
     name: 'FollowingTab',
     title: 'Seguindo',
     iconName: 'people-outline',
-    componentRender: Home,
+    componentRender: Following,
   },
 ];
 

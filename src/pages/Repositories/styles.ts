@@ -7,6 +7,7 @@ export const Container = styled.View`
 
 export const RepositoryContainer = styled.View`
   margin-top: 25px;
+  padding-bottom: 25px;
 `;
 
 export const Description = styled.Text`
