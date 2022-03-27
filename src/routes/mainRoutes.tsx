@@ -81,6 +81,7 @@ function HomeTab() {
           right: 0,
           borderTopLeftRadius: 15,
           borderTopRightRadius: 15,
+          height: 50,
         },
       }}
     >

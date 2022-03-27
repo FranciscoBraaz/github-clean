@@ -20,6 +20,8 @@ export function Login() {
       <Input
         placeholder="Usuário"
         value={username}
+        editable={!isLoading}
+        selectTextOnFocus={!isLoading}
         onChangeText={(value: string) => setUsername(value)}
       />
       {isLoading ? (
