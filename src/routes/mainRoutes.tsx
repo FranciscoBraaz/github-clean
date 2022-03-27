@@ -75,12 +75,12 @@ function HomeTab() {
       screenOptions={{
         tabBarStyle: {
           borderTopWidth: 0,
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          right: 0,
           borderTopLeftRadius: 15,
           borderTopRightRadius: 15,
+          maxHeight: 50,
+          height: 50,
+        },
+        tabBarItemStyle: {
           height: 50,
         },
       }}
