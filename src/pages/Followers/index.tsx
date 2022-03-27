@@ -15,8 +15,7 @@ export function Followers() {
         backgroundColor: '#1f1f1f',
       },
       headerTitleAlign: 'center',
-      title: 'Seguidores',
-      headerTitle: `${user?.followers} Seguidores` || 'Seguidores',
+      title: `${user?.followers} Seguidores`,
     });
   }, []);
 

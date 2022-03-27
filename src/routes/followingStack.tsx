@@ -12,7 +12,9 @@ export default function FollowingStack() {
       <Stack.Screen
         name="ProfileFollowing"
         component={Profile}
-        options={{ headerShown: false }}
+        options={{
+          headerShown: false,
+        }}
       />
     </Stack.Navigator>
   );

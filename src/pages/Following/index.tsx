@@ -13,16 +13,16 @@ export function Following() {
       headerTintColor: '#fff',
       headerStyle: {
         backgroundColor: '#1f1f1f',
+        height: 50,
       },
       headerTitleAlign: 'center',
-      title: 'Seguindo',
-      headerTitle: `${user?.following} Seguindo` || 'Seguindo',
+      title: `${user?.following} Seguindo`,
     });
   }, []);
 
   return (
     <Container>
-      <UserListing title="Seguidores" url={`/users/${user?.login}/following`} />
+      <UserListing title="Seguindo" url={`/users/${user?.login}/following`} />
     </Container>
   );
 }

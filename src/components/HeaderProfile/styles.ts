@@ -20,6 +20,7 @@ export const Username = styled.Text`
 
 export const ContainerLogout = styled.Pressable`
   flex-direction: row;
+  justify-content: flex-end;
 `;
 
 export const ContainerChangeProfile = styled.Pressable`

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Text, View } from 'react-native';
 import {
   Container,
@@ -11,6 +11,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 import { useAuth, UserData } from '../../contexts/AuthContext';
 import { useNavigation } from '@react-navigation/native';
+import { UIActivityIndicator } from 'react-native-indicators';
 
 interface HeaderProfilePrpos {
   username: string;
@@ -36,9 +37,12 @@ interface ChangeProfileProps {
 function ChangeProfile({ userData }: ChangeProfileProps) {
   const { changeProfile } = useAuth();
   const navigation = useNavigation();
+  const [isLoading, setIsLoading] = useState(false);
 
   async function handleChangeProfile() {
+    setIsLoading(true);
     await changeProfile(userData);
+    setIsLoading(false);
     //@ts-ignore
     navigation.reset({
       index: 0,
@@ -49,10 +53,16 @@ function ChangeProfile({ userData }: ChangeProfileProps) {
 
   return (
     <ContainerChangeProfile onPress={handleChangeProfile}>
-      <Text style={{ color: '#fff', fontSize: 16, marginRight: 5 }}>
-        Trocar
-      </Text>
-      <MaterialIcons name="loop" size={24} color="#ffce00" />
+      {isLoading ? (
+        <UIActivityIndicator size={24} color="#ffce00" />
+      ) : (
+        <>
+          <Text style={{ color: '#fff', fontSize: 16, marginRight: 5 }}>
+            Trocar
+          </Text>
+          <MaterialIcons name="loop" size={24} color="#ffce00" />
+        </>
+      )}
     </ContainerChangeProfile>
   );
 }
@@ -66,7 +76,7 @@ export function HeaderProfile({
   return (
     <Container>
       {!ownerProfile && (
-        <View style={{ width: 60 }}>
+        <View style={{ width: 70 }}>
           <AntDesign
             name="arrowleft"
             size={24}
@@ -78,7 +88,7 @@ export function HeaderProfile({
       <Username style={!ownerProfile ? { flex: 1, textAlign: 'center' } : {}}>
         #{username}
       </Username>
-      <View style={{ width: 60 }}>
+      <View style={{ width: 70 }}>
         {!ownerProfile && user ? <ChangeProfile userData={user} /> : <Logout />}
       </View>
     </Container>
