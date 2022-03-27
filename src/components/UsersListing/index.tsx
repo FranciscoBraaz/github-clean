@@ -28,13 +28,14 @@ interface UserData {
 interface RenderUserProps {
   item: UserData;
   isLastItem: boolean;
+  title: string;
 }
 
 const widthScreen = Dimensions.get('window').width;
 
 const skeletons = [1, 2, 3, 4, 5, 6];
 
-function RenderUser({ item, isLastItem }: RenderUserProps) {
+function RenderUser({ item, isLastItem, title }: RenderUserProps) {
   const navigation = useNavigation();
   const AnimatedEntrance = useRef(new Animated.Value(0)).current;
 
@@ -59,14 +60,19 @@ function RenderUser({ item, isLastItem }: RenderUserProps) {
   });
 
   function handleGoProfile(username: string) {
+    const page =
+      title === 'Seguidores' ? 'ProfileFollower' : 'ProfileFollowing';
     //@ts-ignore
-    navigation.navigate('ProfileFollowing', { username });
+    navigation.navigate(page, { username });
   }
 
   return (
     <View>
       <Animated.View style={{ transform: [{ translateX: translateX }] }}>
-        <TouchableHighlight onPress={() => handleGoProfile(item.login)}>
+        <TouchableHighlight
+          underlayColor="#292929"
+          onPress={() => handleGoProfile(item.login)}
+        >
           <UserContainer>
             <SectionTitle
               title={`#${item.login}`}
@@ -192,7 +198,11 @@ export function UserListing({ title, url }: UserListingProps) {
           contentContainerStyle={{ paddingBottom: tabBarHeight }}
           data={users}
           renderItem={({ item, index }) => (
-            <RenderUser item={item} isLastItem={index === users.length - 1} />
+            <RenderUser
+              item={item}
+              isLastItem={index === users.length - 1}
+              title={title}
+            />
           )}
           keyExtractor={(item) => String(item.id)}
           onEndReached={fetchUsers}

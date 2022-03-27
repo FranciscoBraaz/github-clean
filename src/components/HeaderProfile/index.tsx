@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Text, View } from 'react-native';
 import {
   Container,
   ContainerChangeProfile,
@@ -8,6 +8,7 @@ import {
 } from './styles';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import { useAuth, UserData } from '../../contexts/AuthContext';
 import { useNavigation } from '@react-navigation/native';
 
@@ -49,7 +50,7 @@ function ChangeProfile({ userData }: ChangeProfileProps) {
   return (
     <ContainerChangeProfile onPress={handleChangeProfile}>
       <Text style={{ color: '#fff', fontSize: 16, marginRight: 5 }}>
-        Trocar de perfil
+        Trocar
       </Text>
       <MaterialIcons name="loop" size={24} color="#ffce00" />
     </ContainerChangeProfile>
@@ -61,10 +62,25 @@ export function HeaderProfile({
   ownerProfile,
   user,
 }: HeaderProfilePrpos) {
+  const navigation = useNavigation();
   return (
     <Container>
-      <Username>#{username}</Username>
-      {!ownerProfile && user ? <ChangeProfile userData={user} /> : <Logout />}
+      {!ownerProfile && (
+        <View style={{ width: 60 }}>
+          <AntDesign
+            name="arrowleft"
+            size={24}
+            color="#fff"
+            onPress={() => navigation.goBack()}
+          />
+        </View>
+      )}
+      <Username style={!ownerProfile ? { flex: 1, textAlign: 'center' } : {}}>
+        #{username}
+      </Username>
+      <View style={{ width: 60 }}>
+        {!ownerProfile && user ? <ChangeProfile userData={user} /> : <Logout />}
+      </View>
     </Container>
   );
 }

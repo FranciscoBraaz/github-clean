@@ -1,12 +1,11 @@
-import React, { ComponentType } from 'react';
+import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Home } from '../pages/Home';
 import { Ionicons, Feather } from '@expo/vector-icons';
 import { Repositories } from '../pages/Repositories';
-import { Following } from '../pages/Following';
-import { Followers } from '../pages/Followers';
 import FollowingStack from './followingStack';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import FollowersStack from './followersStack';
 
 interface TabData {
   iconName: string;
@@ -36,7 +35,7 @@ const tabs = [
     name: 'FollowersTab',
     title: 'Seguidores',
     iconName: 'people-outline',
-    componentRender: Followers,
+    componentRender: FollowersStack,
   },
   {
     name: 'FollowingTab',
