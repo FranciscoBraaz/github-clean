@@ -18,6 +18,7 @@ export type UserData = {
 interface AuthContextData {
   isAuthenticated: boolean;
   user: UserData | null;
+  isLoading: boolean;
   login: (username: string) => void;
   logout: () => void;
   changeProfile: (userData: UserData) => void;
@@ -32,8 +33,10 @@ const AuthContext = createContext({} as AuthContextData);
 export function AuthProvider({ children }: AuthProviderType) {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<UserData | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
+    setIsLoading(true);
     async function loadUserInfo() {
       try {
         const storageUser = await AsyncStorage.getItem('@githubClean:user');
@@ -44,6 +47,8 @@ export function AuthProvider({ children }: AuthProviderType) {
         }
       } catch (err) {
         logout();
+      } finally {
+        setIsLoading(false);
       }
     }
 
@@ -51,6 +56,7 @@ export function AuthProvider({ children }: AuthProviderType) {
   }, []);
 
   async function login(username: string) {
+    setIsLoading(true);
     api
       .get(`/users/${username}`)
       .then(async (response) => {
@@ -81,6 +87,9 @@ export function AuthProvider({ children }: AuthProviderType) {
             );
             break;
         }
+      })
+      .finally(() => {
+        setIsLoading(false);
       });
   }
 
@@ -98,7 +107,7 @@ export function AuthProvider({ children }: AuthProviderType) {
 
   return (
     <AuthContext.Provider
-      value={{ isAuthenticated, user, login, logout, changeProfile }}
+      value={{ isAuthenticated, user, login, logout, changeProfile, isLoading }}
     >
       {children}
     </AuthContext.Provider>
