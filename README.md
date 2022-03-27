@@ -40,7 +40,7 @@ https://user-images.githubusercontent.com/50181942/160297713-93b082fc-fe51-456c-
     yarn install
 
 ### Criação de um access token:
-Como é necessário ter um personal token para pegar o campo email, deve-se, portanto, criar esse token. Para isso acesse o GitHub e em seguida: Settings -> Developer settings -> Personal access tokens -> Generate new token. Após criar o personal token, entre na pasta raíz do projeto, crie um arquivo .env.local e adicione a linha:
+Como é necessário ter um personal token para pegar certas informações, deve-se, portanto, criar esse token. Para isso acesse o GitHub e em seguida: Settings -> Developer settings -> Personal access tokens -> Generate new token. Após criar o personal token, entre na pasta raíz do projeto, crie um arquivo .env.local e adicione a linha:
 
 `GITHUB_TOKEN = "token_criado"`
 
