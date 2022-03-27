@@ -3,7 +3,7 @@ import { api } from '../services/api';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Alert } from 'react-native';
 
-type UserData = {
+export type UserData = {
   avatar_url: string;
   bio: string;
   email: string;
@@ -20,6 +20,7 @@ interface AuthContextData {
   user: UserData | null;
   login: (username: string) => void;
   logout: () => void;
+  changeProfile: (userData: UserData) => void;
 }
 
 type AuthProviderType = {
@@ -89,8 +90,16 @@ export function AuthProvider({ children }: AuthProviderType) {
     setUser(null);
   }
 
+  async function changeProfile(userData: UserData) {
+    await AsyncStorage.setItem('@githubClean:user', JSON.stringify(userData));
+    setUser(userData);
+    setIsAuthenticated(true);
+  }
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, user, login, logout }}>
+    <AuthContext.Provider
+      value={{ isAuthenticated, user, login, logout, changeProfile }}
+    >
       {children}
     </AuthContext.Provider>
   );

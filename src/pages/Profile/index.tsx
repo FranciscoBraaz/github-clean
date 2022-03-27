@@ -1,19 +1,37 @@
-import React from 'react';
-import { ScrollView, View } from 'react-native';
+import { View, Text, ScrollView } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import { UserInfo } from '../../components/UserInfo';
-import { HeaderProfile } from '../../components/HeaderProfile';
-import { useAuth } from '../../contexts/AuthContext';
-import { Bio } from '../../components/Bio';
 import { NumbersInfo } from '../../components/NumbersInfo';
 import { ProfilePhoto } from '../../components/ProfilePhoto';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import { UserData } from '../../contexts/AuthContext';
+import { Bio } from '../../components/Bio';
+import { api } from '../../services/api';
+import { RouteProp, useRoute } from '@react-navigation/native';
+import { HeaderProfile } from '../../components/HeaderProfile';
 
-export function Home() {
-  const { user } = useAuth();
-  if (!user) return null;
+interface ProfileProps {
+  username: string;
+}
 
+export function Profile() {
   const tabBarHeight = useBottomTabBarHeight();
+  const [user, setUser] = useState<UserData | null>(null);
+  const route: RouteProp<{ params: { username: string } }, 'params'> =
+    useRoute();
 
+  useEffect(() => {
+    api
+      .get(`/users/${route.params.username}`)
+      .then((response) => {
+        setUser(response.data);
+      })
+      .catch((err) => {
+        console.log(err.response);
+      });
+  }, []);
+
+  if (!user) return null;
   return (
     <View
       style={{
@@ -25,7 +43,7 @@ export function Home() {
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ paddingBottom: tabBarHeight + 10 }}
       >
-        <HeaderProfile username={user.login} ownerProfile={true} />
+        <HeaderProfile username={user.login} ownerProfile={false} user={user} />
         <ProfilePhoto avatar={user.avatar_url} />
         <View
           style={{

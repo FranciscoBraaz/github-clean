@@ -5,6 +5,8 @@ import { Ionicons, Feather } from '@expo/vector-icons';
 import { Repositories } from '../pages/Repositories';
 import { Following } from '../pages/Following';
 import { Followers } from '../pages/Followers';
+import FollowingStack from './followingStack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 interface TabData {
   iconName: string;
@@ -19,7 +21,7 @@ interface IconProps {
 
 const tabs = [
   {
-    name: 'HomeTab',
+    name: 'Home',
     title: 'Home',
     iconName: 'home-outline',
     componentRender: Home,
@@ -40,11 +42,12 @@ const tabs = [
     name: 'FollowingTab',
     title: 'Seguindo',
     iconName: 'people-outline',
-    componentRender: Following,
+    componentRender: FollowingStack,
   },
 ];
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 function IoniconsComponent({ tab, tabInfo }: IconProps) {
   return (
@@ -67,7 +70,7 @@ function FatherComponent({ tab, tabInfo }: IconProps) {
   );
 }
 
-export default function MainRoutes() {
+function HomeTab() {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -88,7 +91,7 @@ export default function MainRoutes() {
           name={tab.name}
           component={tab.componentRender}
           options={{
-            headerShown: index !== 0,
+            headerShown: index === 1,
             tabBarActiveTintColor: '#000',
             tabBarInactiveTintColor: '#969696',
             title: `${tab.title}`,
@@ -103,5 +106,13 @@ export default function MainRoutes() {
         />
       ))}
     </Tab.Navigator>
+  );
+}
+
+export default function MainRoutes() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="HomeTab" component={HomeTab} />
+    </Stack.Navigator>
   );
 }

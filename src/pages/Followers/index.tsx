@@ -22,7 +22,7 @@ export function Followers() {
 
   return (
     <Container>
-      <UserListing title="Seguidores" url={'/users/FranciscoBraaz/followers'} />
+      <UserListing title="Seguidores" url={`/users/${user?.login}/followers`} />
     </Container>
   );
 }

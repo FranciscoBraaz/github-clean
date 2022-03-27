@@ -5,6 +5,7 @@ import {
   Animated,
   Easing,
   ScrollView,
+  TouchableHighlight,
 } from 'react-native';
 import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
@@ -34,6 +35,7 @@ const widthScreen = Dimensions.get('window').width;
 const skeletons = [1, 2, 3, 4, 5, 6];
 
 function RenderUser({ item, isLastItem }: RenderUserProps) {
+  const navigation = useNavigation();
   const AnimatedEntrance = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -56,20 +58,27 @@ function RenderUser({ item, isLastItem }: RenderUserProps) {
     outputRange: [-10, 0],
   });
 
+  function handleGoProfile(username: string) {
+    //@ts-ignore
+    navigation.navigate('ProfileFollowing', { username });
+  }
+
   return (
     <View>
       <Animated.View style={{ transform: [{ translateX: translateX }] }}>
-        <UserContainer>
-          <SectionTitle
-            title={`#${item.login}`}
-            fontSize={20}
-            hasPhoto={true}
-            urlAvatar={item.avatar_url}
-          />
-          <View style={{ marginLeft: 'auto' }}>
-            <AntDesign name="arrowright" size={24} color="#fff" />
-          </View>
-        </UserContainer>
+        <TouchableHighlight onPress={() => handleGoProfile(item.login)}>
+          <UserContainer>
+            <SectionTitle
+              title={`#${item.login}`}
+              fontSize={20}
+              hasPhoto={true}
+              urlAvatar={item.avatar_url}
+            />
+            <View style={{ marginLeft: 'auto' }}>
+              <AntDesign name="arrowright" size={24} color="#fff" />
+            </View>
+          </UserContainer>
+        </TouchableHighlight>
       </Animated.View>
 
       {!isLastItem && <Divider />}
@@ -134,8 +143,6 @@ interface UserListingProps {
 }
 
 export function UserListing({ title, url }: UserListingProps) {
-  const navigation = useNavigation();
-  const { user } = useAuth();
   const [loadMore, setLoadMore] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingInitial, setIsLoadingInitial] = useState(false);

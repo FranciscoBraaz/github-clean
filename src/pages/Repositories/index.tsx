@@ -180,7 +180,7 @@ export function Repositories() {
     if (!loadMore) return;
     setIsLoading(true);
     await api
-      .get(`/users/FranciscoBraaz/repos?page=${page}&per_page=${perPage}`)
+      .get(`/users/${user?.login}/repos?page=${page}&per_page=${perPage}`)
       .then((response) => {
         setTimeout(() => {
           setRepositories([...repositories, ...response.data]);

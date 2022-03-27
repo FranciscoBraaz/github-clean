@@ -18,6 +18,10 @@ export const Username = styled.Text`
   color: #fff;
 `;
 
-export const Logout = styled.Pressable`
+export const ContainerLogout = styled.Pressable`
+  flex-direction: row;
+`;
+
+export const ContainerChangeProfile = styled.Pressable`
   flex-direction: row;
 `;
